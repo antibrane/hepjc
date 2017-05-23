@@ -1,0 +1,63 @@
+/* html colors: #CC0033 (red) and #003366 (blue)*/
+ 
+body {
+    background-color: #ffffff;
+    background-image: url("http://www.physics.arizona.edu/~jkost/img/feyn_background_transparent9.jpg");
+    font-family: "Roboto", Arial, serif;
+    line-height: 1.3;
+    font-size: 18px;
+    color: #000000;
+    -ms-overflow-style: scrollbar;
+    overflow-x: hidden;
+    margin-left:35px;
+}
+
+h1 {
+    font-family: "Roboto", Arial, serif;
+    font-size: 32px;
+}
+
+li {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+table { 
+	width: 97%;
+	border: 3pt solid black;
+	/*border-collapse: collapse;*/
+	font-size: 16px;
+	font-family: "Roboto", Arial, serif;
+}
+
+th { 
+	background: #003366;
+	color: white; 
+	font-weight: bold; 
+	font-family: "Roboto", Arial, serif;
+}
+
+td, th { 
+	padding: 4px; 
+	border: 2px solid black;
+	font-size: 16px;
+	text-align: center;
+	font-family: "Roboto", Arial, serif;
+}
+
+.labels tr td {
+	background-color: #CC0033;
+	font-weight: bold;
+	color: #ffffff;
+	text-align: center;
+	font-family: "Roboto", Arial, serif;
+}
+
+.label tr td label {
+	display: block;
+}
+
+
+[data-toggle="toggle"] {
+	display: none;
+}
