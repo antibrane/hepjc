@@ -1,4 +1,4 @@
-Website information:
+Website information (include /index.html at the end):
 ------------------------------------------------------------
 WEBSITE ADDRESS:
 

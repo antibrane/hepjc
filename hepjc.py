@@ -15,6 +15,7 @@
 
 import sys
 import os
+from pathlib import Path
 import re
 import subprocess
 from datetime import datetime
@@ -39,31 +40,88 @@ parser.add_argument('-u', '--upload', action='store_true', help='upload changes 
 args = parser.parse_args()
 #---------------------------------------------------#
 
-
-#--------------CHECK FOR WEB DATA-------------------#
-emptyparams = True
-file_input = open('web_data.txt', 'r')
-webdata_string = file_input.read()
-address = re.findall('\s*WEBSITE\sADDRESS:\s*(\S+)\s*\n', webdata_string)
-username = re.findall('\s*USERNAME:\s*(\S+)\s*\n', webdata_string)
-domain = re.findall('\s*DOMAIN:\s*(\S+)\s*\n', webdata_string)
-
-if address == [] or username == [] or domain == []:
-    emptyparams = True
-    print('----------------------------------------------------------------')
-    print('ERROR:---> enter appropriate information into web_data.txt file.')
-    print('----------------------------------------------------------------')
-    sys.exit()
-else:
-    emptyparams = False
-#---------------------------------------------------#
-
-
 def checkYN(var):
     while var != 'N' and var != 'n' and var != 'Y' and var != 'y':
         print('ERROR:---> enter Y or N')
         var = input()
     return var
+
+#--------------CHECK FOR WEB DATA-------------------#
+emptyparams = True
+file_input = None
+webdata_string = ''
+address = []
+username = []
+domain = []
+if os.path.isfile('web_data.txt') == True:
+    file_input = open('web_data.txt', 'r')
+    webdata_string = file_input.read()
+    address = re.findall('\s*WEBSITE\sADDRESS:\s*(\S+)\s*\n', webdata_string)
+    username = re.findall('\s*USERNAME:\s*(\S+)\s*\n', webdata_string)
+    domain = re.findall('\s*DOMAIN:\s*(\S+)\s*', webdata_string)
+    file_input.close()
+
+if address == [] or username == [] or domain == []:
+    emptyparams = True
+    print('----------------------------------------------------------------')
+    print('ERROR:---> need to enter information into web_data.txt file.')
+    print('      ---> want to input that information here? (Y/N)')
+    print('----------------------------------------------------------------')
+
+    inputYN = str(input()).upper()
+    inputYN = checkYN(inputYN)
+    if inputYN == 'N':
+        sys.exit()
+    else: 
+        correctQ = False
+        while correctQ == False:
+            print('--------------------')
+            print('WEBSITE ADDRESS:')
+            print('--------------------\n')
+            address = str(input())
+
+            print('--------------------')
+            print('USERNAME (for secure copy):')
+            print('--------------------\n')
+            username = str(input())
+
+            print('--------------------')
+            print('DOMAIN (for secure copy):')
+            print('--------------------\n')
+            domain = str(input())
+
+            print('--------------------')
+            print('...will then use the following web data:')
+            print('WEBSITE ADDRESS: %s' % address)
+            print('USERNAME: %s' % username)
+            print('DOMAIN: %s' % domain)
+            print('--------------------\n')
+
+            print('OK? (Y/N)')
+            OKQ = str(input()).upper()
+            OKQ = checkYN(OKQ)
+            if OKQ == 'Y':
+                webdata_text = """Website information (include /index.html at the end):
+------------------------------------------------------------
+WEBSITE ADDRESS: %s
+
+
+Secure copy information:
+------------------------------------------------------------
+USERNAME: %s
+DOMAIN: %s""" % (address, username, domain)
+
+                file_output = open('web_data.txt', 'w')
+                file_output.write(webdata_text)
+                file_output.close()
+
+                correctQ = True
+            else:
+                print('...trying again\n')
+
+else:
+    emptyparams = False
+#---------------------------------------------------#
 
 def writechanges_makebackup(string_var):
     print('--------------------')
@@ -145,7 +203,7 @@ if args.checkstructure == False and args.listschedule == False and args.deletesl
 
 
 # import the main webpage (if necessary and allowed):
-if os.path.isfile('index.html') == 0 and emptyparams == False:
+if os.path.isfile('index.html') == 0 and emptyparams == False and args.deletebackups != True:
     url = address[0]
     response = urllib.request.urlopen(url)
     data = response.read()
@@ -154,8 +212,11 @@ if os.path.isfile('index.html') == 0 and emptyparams == False:
     file_download.write(page)
     file_download.close()
 
-file_input = open('index.html', 'r')
-string_input = file_input.read()
+file_input = Path('index.html')
+string_input = ''
+if file_input.is_file():
+    file_input = open('index.html', 'r')
+    string_input = file_input.read()
 
 part1 = r'\s*<td>(\d+(?::\d\d)?\s*(?:AM|PM))\s-\s(\d\d/\d\d/\d\d)</td>\n'
 part2 = r'\s*<td>(.+)</td>'
