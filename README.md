@@ -11,7 +11,7 @@ Updating tool for *High-Energy Physics Journal Club (HEP-JC)* website at the Uni
   
 ## Using the Script
 
-The website should be able to be completely run using this script.  Run the script either with `./hepjc.py' and follow the prompts, or run with one of the following options:
+The updating of the HEP-JC web page can be completely handled by using this script.  Run the script either with `./hepjc.py` and follow the prompts, or run with one of the following options:
 
 * `-c` **checks** the structure of the website and ensures the color coding of the schedule is properly set based on the current date (this command should be run *at least once a week* to keep up-to-date).
 * `-l` **lists** schedule showing all past and future slots.
