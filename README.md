@@ -1,5 +1,5 @@
 # hepjc
-Updating tool for High-Energy Physics Journal Club (HEP-JC) website at the University of Arizona.
+Updating tool for *High-Energy Physics Journal Club (HEP-JC)* website at the University of Arizona.
 
 ## Installation
 
