@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 
+#!/usr/bin/env python3
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ if address == [] or username == [] or domain == []:
     inputYN = checkYN(inputYN)
     if inputYN == 'N':
         sys.exit()
-    else: 
+    else:
         correctQ = False
         while correctQ == False:
             print('--------------------')
@@ -248,11 +248,13 @@ def find_new_slot_number(date, string_input):
     for entry in entries:
         if entry[1] != '':
             dateentry = datetime.strptime(entry[1], "%m/%d/%y")
-            
+
             if dateentry > datetofit:
                 result = i
                 break
-            
+            elif (result == 0) and (i == len(entries)-1):
+                result = len(entries)
+
         i = i + 1
 
     return result
@@ -336,7 +338,7 @@ if args.checkstructure == True:
     print('------------------------------------------------------')
     print('Which is the current semester?')
     print('------------------------------------------------------')
-    
+
     for i in range(0,len(find_semesters)):
         print('[%d] %s %s' % (i,find_semesters[i][0],find_semesters[i][1]))
 
@@ -456,7 +458,7 @@ if args.newslot == True:
         print('TITLE: %s' % new_title)
         print('================================')
         print('================================')
-    
+
         finalizeQ = str(input()).upper()
         finalizeQ = checkYN(finalizeQ)
 
@@ -473,9 +475,14 @@ if args.newslot == True:
 
         i = 1
         for item in string_input.split('\n'):
-            if entries[newslotnumber][0] + ' - ' + entries[newslotnumber][1] in item:
-                add_line = i - 2
-            i = i + 1
+            if newslotnumber != len(entries):
+                if entries[newslotnumber][0] + ' - ' + entries[newslotnumber][1] in item:
+                    add_line = i - 2
+                i = i + 1
+            else:
+                if entries[len(entries)-1][0] + ' - ' + entries[len(entries)-1][1] in item:
+                    add_line = i + 5
+                i = i + 1
 
         new_string = '\n'.join(string_input.split('\n')[0:add_line-1] + add_string.split('\n')[0:len(add_string.split('\n'))] + string_input.split('\n')[add_line:len(string_input.split('\n'))])
 
@@ -577,7 +584,7 @@ if args.newslot == True:
             # construct title link
             if new_link == '':
                 titletext += r'%s' % new_title
-            else: 
+            else:
                 titletext += r'<a href=%s target="_blank">%s</a>' % (new_link, new_title)
             # construct (see also [1] [2]...) links
             if len(otherlinks) != 0:
@@ -605,9 +612,14 @@ if args.newslot == True:
 
             i = 1
             for item in string_input.split('\n'):
-                if entries[newslotnumber][0] + ' - ' + entries[newslotnumber][1] in item:
-                    add_line = i - 2
-                i = i + 1
+                if newslotnumber != len(entries):
+                    if entries[newslotnumber][0] + ' - ' + entries[newslotnumber][1] in item:
+                        add_line = i - 2
+                    i = i + 1
+                else:
+                    if entries[len(entries)-1][0] + ' - ' + entries[len(entries)-1][1] in item:
+                        add_line = i + 5
+                    i = i + 1
 
             new_string = '\n'.join(string_input.split('\n')[0:add_line-1] + add_string.split('\n')[0:len(add_string.split('\n'))] + string_input.split('\n')[add_line:len(string_input.split('\n'))])
 
@@ -692,7 +704,7 @@ if args.newsemester == True:
         else:
             return -1
 
-        
+
     print('------------------------------------------------------')
     print('CREATE NEW SEMESTER OF SPEAKING SLOTS:')
     print('------------------------------------------------------')
