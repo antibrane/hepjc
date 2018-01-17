@@ -265,6 +265,8 @@ if args.checkstructure == True:
     print('CHECK DOCUMENT STRUCTURE:')
     print('------------------------------------------------------')
 
+    list_schedule(string_input)
+
     green_bgcolor = '66CC66'
     past_bgcolor = 'A4A4A4'
     missed_bgcolor = '777777'
@@ -767,10 +769,10 @@ if args.newsemester == True:
     <tbody class="hide">
 
     <tr>
-    <td>00AM - 00/00/00</td>
-    <td>TBA</td>
-    <td>TBA</td>
-    <td>TBA</td>
+    <td>10AM - 01/01/11</td>
+    <td>DUMMY</td>
+    <td>DUMMY</td>
+    <td>DELETE THIS ENTRY AFTER ADDING A SLOTS</td>
     </tr>
 
     </tbody>
